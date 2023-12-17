@@ -38,11 +38,11 @@ def q_learning_epsilon_constant(it_max, epsilon, learning_rate, discount_factor)
     return q_table,rewards_table, optimal_episode
 
 
-# q_table, rewards_table, optimal_episode  = q_learning_epsilon_constant(it_max, epsilon, learning_rate, discount_factor)
-# print(f'Q table: {q_table}')
-# print(f'Rewards table: {rewards_table}')
-# print(f'First episode whem the path is optimal: {optimal_episode}')
-# print(f'Average reward: {sum(rewards_table)/it_max}')
+q_table, rewards_table, optimal_episode  = q_learning_epsilon_constant(it_max, epsilon, learning_rate, discount_factor)
+print(f'Q table: {q_table}')
+print(f'Rewards table: {rewards_table}')
+print(f'First episode whem the path is optimal: {optimal_episode}')
+print(f'Average reward: {sum(rewards_table)/it_max}')
 # first_perfect_solution = 0
 # average_reward = 0
 # num_of_experiments = 10
@@ -103,22 +103,22 @@ print(f'Average reward: {sum(rewards_table_optimal)/10000}')
 print(f'Epsilon table: {epsilon_table}')
 
 # Test the trained agent
-# env = gym.make('CliffWalking-v0', render_mode="human")
+env = gym.make('CliffWalking-v0', render_mode="human")
 
-# state,info = env.reset()
-# final_reward = 0
-# final_path = []
-# terminated = False
-# truncated = False
-# while not terminated and not truncated:
-#     action = np.argmax(q_table[state])
-#     next_state, reward, terminated,truncated,info= env.step(action)
-#     final_reward += reward
-#     state = next_state
-#     final_path.append(state)
-# # print(final_reward)
-# # print(final_path)
-# env.close()
+state,info = env.reset()
+final_reward = 0
+final_path = []
+terminated = False
+truncated = False
+while not terminated and not truncated:
+    action = np.argmax(q_table[state])
+    next_state, reward, terminated,truncated,info= env.step(action)
+    final_reward += reward
+    state = next_state
+    final_path.append(state)
+# print(final_reward)
+# print(final_path)
+env.close()
 
 
 #plots
@@ -155,7 +155,7 @@ def plot_q_table_map(q_table):
         for j in range(12):
             state_q_values = q_table_reshaped[i, j]
             text = '\n'.join([f'{action}: {value:.2f}' for action, value in zip(['U', 'R', 'D', 'L'], state_q_values)])
-            ax.text(j + 0.5, 3.5 - i, text, ha='center', va='center', bbox=dict(facecolor='lightblue', edgecolor='black', boxstyle='round,pad=0.15'),fontsize=7)
+            ax.text(j + 0.5, 3.5 - i, text, ha='center', va='center', bbox=dict(facecolor='lightblue', edgecolor='black', boxstyle='round,pad=0.4'),fontsize=7)
 
     ax.set_xticks(np.arange(0.5, 12.5, 1))
     ax.set_xticklabels(range(1, 13), fontsize=6)
